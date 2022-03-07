@@ -1,12 +1,12 @@
 import { Layout, Menu } from "antd";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { pageState } from "../recoil/data";
 
 const { Header } = Layout;
 
 const Navbar = () => {
-  const [currentPage, setCurrentPage] = useState("/");
+  const [currentPage, setCurrentPage] = useRecoilState(pageState);
   const router = useRouter();
   const redirect = (url: string) => {
     setCurrentPage(url);

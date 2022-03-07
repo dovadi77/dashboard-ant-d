@@ -1,4 +1,4 @@
-import { Button, Card, Divider, Space, Table } from "antd";
+import { Button, Card, Divider, Popconfirm, Space, Table } from "antd";
 import type { NextPage } from "next";
 import { Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -52,12 +52,19 @@ const Home: NextPage = () => {
               size="large"
             />
           </Link>
-          <Button
-            icon={<DeleteOutlined style={{ color: "red" }} />}
-            type="text"
-            shape="circle"
-            size="large"
-          />
+          <Popconfirm
+            title="Are you sure to delete this item?"
+            onConfirm={() => deleteData(record.id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button
+              icon={<DeleteOutlined style={{ color: "red" }} />}
+              type="text"
+              shape="circle"
+              size="large"
+            />
+          </Popconfirm>
         </Space>
       ),
     },
@@ -68,6 +75,12 @@ const Home: NextPage = () => {
 
   const showTotal = (total: number = info) => {
     return `Total ${total} items`;
+  };
+
+  const deleteData = (itemID: any) => {
+    let index = data.findIndex((x) => x.id === parseInt(itemID));
+    const newData = [...data.slice(0, index), ...data.slice(index + 1)];
+    setData(newData);
   };
 
   return (

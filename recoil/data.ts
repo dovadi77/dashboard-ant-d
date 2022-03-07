@@ -18,6 +18,11 @@ export const dataState = atom({
   ] as Item[],
 });
 
+export const pageState = atom({
+  key: "pageState",
+  default: "/",
+});
+
 export const dataLengthState = selector({
   key: "dataLengthState",
   get: ({ get }) => {

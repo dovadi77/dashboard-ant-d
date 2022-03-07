@@ -1,25 +1,20 @@
 import React from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
-import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { Layout, Menu } from "antd";
+import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+import { pageState } from "../recoil/data";
 
 import styles from "../styles/Home.module.css";
 
 const { Sider } = Layout;
-const { SubMenu } = Menu;
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
   const currentPath = router.asPath;
-  const [currentPage, setCurrentPage] = useState(currentPath);
+  const [currentPage, setCurrentPage] = useRecoilState(pageState);
 
   const redirect = (url: string) => {
     setCurrentPage(url);
@@ -35,7 +30,7 @@ const Sidebar = () => {
       <div className={styles.logo} />
       <Menu
         className={styles.disableMenuBorder}
-        defaultSelectedKeys={["1"]}
+        defaultSelectedKeys={[currentPage]}
         mode="inline"
       >
         {currentPath === "/" && (
