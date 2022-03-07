@@ -1,16 +1,15 @@
-import React from 'react'
-import { Layout, Menu, Breadcrumb } from 'antd';
+import React from "react";
+import { Layout, Menu, Breadcrumb } from "antd";
 import {
   DesktopOutlined,
   PieChartOutlined,
   FileOutlined,
   TeamOutlined,
   UserOutlined,
-} from '@ant-design/icons';
+} from "@ant-design/icons";
 import { useState } from "react";
 
 import styles from "../styles/Home.module.css";
-
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -25,7 +24,11 @@ const Sidebar = () => {
   return (
     <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
       <div className={styles.logo} />
-      <Menu className={styles.disableMenuBorder} defaultSelectedKeys={["1"]} mode="inline">
+      <Menu
+        className={styles.disableMenuBorder}
+        defaultSelectedKeys={["1"]}
+        mode="inline"
+      >
         <Menu.Item key="1" icon={<PieChartOutlined />}>
           Option 1
         </Menu.Item>
@@ -46,7 +49,7 @@ const Sidebar = () => {
         </Menu.Item>
       </Menu>
     </Sider>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
