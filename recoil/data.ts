@@ -39,9 +39,9 @@ export const specifiedDataState = selectorFamily({
     (itemID: number) =>
     ({ set }, newValue: any) =>
       set(dataState, (prevState) => {
-        let data = prevState;
+        let data = [...prevState];
         let index = data.findIndex((x) => x.id === itemID);
-        data[index] = newValue;
+        data[index] = { ...data[index], ...newValue };
         return data;
       }),
 });

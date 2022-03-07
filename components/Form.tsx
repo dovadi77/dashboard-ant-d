@@ -19,12 +19,16 @@ const { Option } = Select;
 
 type Form = {
   headers: FormHeaders;
-  value?: number;
+  value?: any;
   title: string;
 };
 
 const Form = ({ headers, value, title }: Form) => {
   const [data, setData] = useRecoilState(dataState);
+  const [detailData, setDetailData] = useRecoilState(
+    specifiedDataState(parseInt(value))
+  );
+
   const finish = (res: any) => {
     if (!value) {
       const genID = Math.floor(Math.random() * 1000000);
@@ -39,21 +43,12 @@ const Form = ({ headers, value, title }: Form) => {
         description: "Data has been added.",
       });
     } else {
-      const updateData = useSetRecoilState(specifiedDataState(value));
-      updateData(res);
+      setDetailData(res);
       notification.open({
         message: "Success ✔",
         description: "Data has been updated.",
       });
     }
-  };
-
-  const initValue = () => {
-    if (value) {
-      const res = useRecoilValue(specifiedDataState(value));
-      return res;
-    }
-    return {};
   };
 
   const form = () => {
@@ -138,7 +133,7 @@ const Form = ({ headers, value, title }: Form) => {
           id="formData"
           layout="vertical"
           onFinish={finish}
-          initialValues={initValue}
+          initialValues={detailData ?? {}}
         >
           <Row gutter={24}>{form()}</Row>
         </FormData>

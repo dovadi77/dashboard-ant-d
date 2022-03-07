@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import { Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useRecoilState, useRecoilValue } from "recoil";
+import Link from "next/link";
 import type { Item } from "../constants";
 import { dataState, dataLengthState } from "../recoil/data";
 import Head from "../components/Head";
@@ -43,12 +44,14 @@ const Home: NextPage = () => {
       key: "action",
       render: (_text: any, record: Item) => (
         <Space size={"small"} split={<Divider type="vertical" />}>
-          <Button
-            icon={<EditOutlined style={{ color: "yellowgreen" }} />}
-            type="text"
-            shape="circle"
-            size="large"
-          />
+          <Link href="/[id]" as={`/${record.id}`}>
+            <Button
+              icon={<EditOutlined style={{ color: "yellowgreen" }} />}
+              type="text"
+              shape="circle"
+              size="large"
+            />
+          </Link>
           <Button
             icon={<DeleteOutlined style={{ color: "red" }} />}
             type="text"
