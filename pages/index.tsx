@@ -72,7 +72,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <Head title="Testing Next.JS" desc="This is just a test" />
+      <Head />
       <TableButton isChild={false} isHome={true} />
       <Card>
         <div>

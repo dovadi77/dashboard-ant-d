@@ -3,6 +3,7 @@ import Form from "../../components/Form";
 import { FormHeaders } from "../../constants";
 import TableButton from "../../components/TableButton";
 import { useRouter } from "next/router";
+import Head from "../../components/Head";
 
 const Edit = () => {
   const router = useRouter();
@@ -33,6 +34,7 @@ const Edit = () => {
   ];
   return (
     <div>
+      <Head />
       <TableButton isChild={true} isHome={false} />
       <Form headers={headers} title={"Edit - Cash - Master"} value={id} />
     </div>

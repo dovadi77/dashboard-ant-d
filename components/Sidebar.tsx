@@ -8,6 +8,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import styles from "../styles/Home.module.css";
 
@@ -16,6 +17,14 @@ const { SubMenu } = Menu;
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const router = useRouter();
+  const currentPath = router.asPath;
+  const [currentPage, setCurrentPage] = useState(currentPath);
+
+  const redirect = (url: string) => {
+    setCurrentPage(url);
+    router.push(url);
+  };
 
   const onCollapse = (collapse: boolean) => {
     setCollapsed(collapse);
@@ -29,24 +38,62 @@ const Sidebar = () => {
         defaultSelectedKeys={["1"]}
         mode="inline"
       >
-        <Menu.Item key="1" icon={<PieChartOutlined />}>
-          Option 1
-        </Menu.Item>
-        <Menu.Item key="2" icon={<DesktopOutlined />}>
-          Option 2
-        </Menu.Item>
-        <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-          <Menu.Item key="3">Tom</Menu.Item>
-          <Menu.Item key="4">Bill</Menu.Item>
-          <Menu.Item key="5">Alex</Menu.Item>
-        </SubMenu>
-        <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-          <Menu.Item key="6">Team 1</Menu.Item>
-          <Menu.Item key="8">Team 2</Menu.Item>
-        </SubMenu>
-        <Menu.Item key="9" icon={<FileOutlined />}>
-          Files
-        </Menu.Item>
+        {currentPath === "/" && (
+          <Menu.Item
+            key="/"
+            icon={<DesktopOutlined />}
+            onClick={() => redirect("/")}
+          >
+            Dashboard
+          </Menu.Item>
+        )}
+        {(currentPath === "/redux" || currentPath === "/redux/counter") && (
+          <>
+            <Menu.Item
+              key="/redux"
+              icon={<DesktopOutlined />}
+              onClick={() => redirect("/redux")}
+            >
+              Todos
+            </Menu.Item>
+            <Menu.Item
+              key="/redux/counter"
+              icon={<PieChartOutlined />}
+              onClick={() => redirect("/redux/counter")}
+            >
+              Counter
+            </Menu.Item>
+          </>
+        )}
+        {(currentPath === "/recoil" || currentPath === "/recoil/counter") && (
+          <>
+            <Menu.Item
+              key="/recoil"
+              icon={<DesktopOutlined />}
+              onClick={() => redirect("/recoil")}
+            >
+              Todos
+            </Menu.Item>
+            <Menu.Item
+              key="/recoil/counter"
+              icon={<PieChartOutlined />}
+              onClick={() => redirect("/recoil/counter")}
+            >
+              Counter
+            </Menu.Item>
+          </>
+        )}
+        {currentPath === "/native" && (
+          <>
+            <Menu.Item
+              key="/native"
+              icon={<DesktopOutlined />}
+              onClick={() => redirect("/native")}
+            >
+              Todos
+            </Menu.Item>
+          </>
+        )}
       </Menu>
     </Sider>
   );
