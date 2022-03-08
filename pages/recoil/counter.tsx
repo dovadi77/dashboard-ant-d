@@ -1,19 +1,22 @@
-import React from "react";
+import { useRecoilState } from "recoil";
 import Head from "../../components/Head";
+import { countState } from "../../recoil/data";
 
-const index = () => {
+const Counter = () => {
+  const [value, setValue] = useRecoilState(countState);
+
+  const add = () => setValue(value + 1);
+  const subtract = () => value !== 0 && setValue(value - 1);
+  const clear = () => value !== 0 && setValue(0);
   return (
-    <div style={{ minHeight: "70vh" }}>
+    <div>
       <Head />
-      <iframe
-        frameBorder="0"
-        style={{ overflow: "hidden", minHeight: "70vh", width: "100%" }}
-        height="100%"
-        width="100%"
-        src="https://state-managment-tutorial.vercel.app/counter"
-      />
+      <h1>Count: {value}</h1>
+      <button onClick={add}>+</button>
+      <button onClick={subtract}>-</button>
+      <button onClick={clear}>Clear</button>
     </div>
   );
 };
 
-export default index;
+export default Counter;

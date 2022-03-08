@@ -3,6 +3,7 @@ import { RecoilRoot } from "recoil";
 import Layout from "../components/BaseLayout";
 import "../styles/globals.css";
 import "../styles/antd.less";
+import { wrapper } from "../redux/store";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -13,5 +14,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </RecoilRoot>
   );
 }
-
-export default MyApp;
+export default wrapper.withRedux(MyApp);

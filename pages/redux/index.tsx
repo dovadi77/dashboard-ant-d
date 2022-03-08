@@ -1,19 +1,49 @@
 import React from "react";
+import { connect } from "react-redux";
+import {
+  addTodos,
+  readTodos,
+  updateTodos,
+  deleteTodos,
+} from "../../redux/actions/todosAction";
+import { TodoItemCreate } from "../../components/TodoItemCreate";
+import { TodoItem } from "../../components/TodoItem";
+import { TodosStats } from "../../components/TodosStats";
+import styles from "../../styles/Home.module.css";
 import Head from "../../components/Head";
+import { statTodos } from "../../redux/store";
 
-const index = () => {
+function Todos(props: any) {
+  const todoList = props.todos;
+
   return (
-    <div style={{ minHeight: "70vh" }}>
+    <div className={styles.container}>
+      <TodosStats state={statTodos(todoList)} />
+      <TodoItemCreate add={props.add} />
       <Head />
-      <iframe
-        frameBorder="0"
-        style={{ overflow: "hidden", minHeight: "70vh", width: "100%" }}
-        height="100%"
-        width="100%"
-        src="https://next-redux-tutorial.vercel.app/todos"
-      />
+      {todoList.map((todoItem: any, index: number) => (
+        <TodoItem
+          key={todoItem.id}
+          item={todoItem}
+          edit={props.update}
+          index={index}
+          del={props.delete}
+        />
+      ))}
     </div>
   );
+}
+// Todos.getInitialProps = ({ store }) => {};
+
+const mapStateToProps = (state: any) => ({
+  todos: state.todos.value,
+});
+
+const mapDispatchToProps = {
+  add: addTodos,
+  read: readTodos,
+  update: updateTodos,
+  delete: deleteTodos,
 };
 
-export default index;
+export default connect(mapStateToProps, mapDispatchToProps)(Todos);

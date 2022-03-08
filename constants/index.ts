@@ -18,3 +18,10 @@ export type FormHeaders = {
 export type FormValues = {
   [key: string]: any;
 };
+
+export type Todos = {
+  id: number;
+  text: string;
+  isComplete: boolean;
+  priority: number;
+};

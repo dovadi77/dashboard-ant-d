@@ -1,19 +1,25 @@
-import React from "react";
+import { useRecoilValue } from "recoil";
+import { TodoItemCreate } from "../../components/TodoItemCreate";
+import { TodoItem } from "../../components/TodoItem";
+import { TodosStats } from "../../components/TodosStats";
+import { sortedTodosState } from "../../recoil/data";
+import styles from "../../styles/Home.module.css";
 import Head from "../../components/Head";
 
-const index = () => {
+const Todos = () => {
+  const todoList = useRecoilValue(sortedTodosState);
+
   return (
-    <div style={{ minHeight: "70vh" }}>
+    <div className={styles.container}>
       <Head />
-      <iframe
-        frameBorder="0"
-        style={{ overflow: "hidden", minHeight: "70vh", width: "100%" }}
-        height="100%"
-        width="100%"
-        src="https://state-managment-tutorial.vercel.app/todos"
-      />
+      <TodosStats />
+      <TodoItemCreate />
+
+      {todoList.map((todoItem, index) => (
+        <TodoItem key={todoItem.id} item={todoItem} index={index} />
+      ))}
     </div>
   );
 };
 
-export default index;
+export default Todos;

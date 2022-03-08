@@ -1,7 +1,7 @@
 import * as crypto from "crypto";
 import { atom, selectorFamily } from "recoil";
 import { selector } from "recoil";
-import type { Item } from "../constants";
+import { Item, Todos } from "../constants";
 
 export const dataState = atom({
   key: "dataState",
@@ -16,6 +16,16 @@ export const dataState = atom({
       items: ["aaaa", "bbbbb", "ccccc"],
     },
   ] as Item[],
+});
+
+export const todosState = atom<Todos[]>({
+  key: `${Math.floor(Math.random() * 10000)}-TodosState`,
+  default: [],
+});
+
+export const countState = atom({
+  key: "countState",
+  default: 0,
 });
 
 export const pageState = atom({
@@ -50,3 +60,40 @@ export const specifiedDataState = selectorFamily({
         return data;
       }),
 });
+
+export const sortedTodosState = selector({
+  key: `sortedTodosState`,
+  get: ({ get }) => {
+    const todos = get(todosState);
+    return sortTodos(todos);
+  },
+});
+
+export const statTodosState = selector({
+  key: `statTodosState`,
+  get: ({ get }) => {
+    const todoList = get(todosState);
+    const totalNum = todoList.length;
+    const totalCompletedNum = todoList.filter((item) => item.isComplete).length;
+    const totalUncompletedNum = totalNum - totalCompletedNum;
+    const percentCompleted =
+      totalNum === 0 ? 0 : (totalCompletedNum / totalNum) * 100;
+
+    return {
+      totalNum,
+      totalCompletedNum,
+      totalUncompletedNum,
+      percentCompleted,
+    };
+  },
+});
+
+const sortTodos = (todos: any[]) => {
+  const todoList = [...todos];
+  if (todos.length > 0) {
+    return todoList.sort((a, b) =>
+      a.priority < b.priority ? 1 : b.priority < a.priority ? -1 : 0
+    );
+  }
+  return todoList;
+};
