@@ -1,7 +1,7 @@
 import * as crypto from "crypto";
 import { atom, selectorFamily } from "recoil";
 import { selector } from "recoil";
-import { Item, Todos } from "../constants";
+import { Item, PageView, Todos } from "../constants";
 
 export const dataState = atom({
   key: "dataState",
@@ -31,6 +31,14 @@ export const countState = atom({
 export const pageState = atom({
   key: "pageState",
   default: "/",
+});
+
+export const pageViewState = atom({
+  key: "pageViewState",
+  default: {
+    page: "index",
+    param: null,
+  } as PageView,
 });
 
 export const dataLengthState = selector({

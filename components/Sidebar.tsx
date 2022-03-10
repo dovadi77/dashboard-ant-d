@@ -4,7 +4,7 @@ import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import { pageState } from "../recoil/data";
+import { pageState, pageViewState } from "../recoil/data";
 
 import styles from "../styles/Home.module.css";
 
@@ -15,10 +15,15 @@ const Sidebar = () => {
   const router = useRouter();
   const currentPath = router.asPath;
   const [currentPage, setCurrentPage] = useRecoilState(pageState);
+  const [pageView, setPageView] = useRecoilState(pageViewState);
 
-  const redirect = (url: string) => {
+  const redirect = (url?: any, page?: any) => {
     setCurrentPage(url);
-    router.push(url);
+    if (!page) {
+      router.push(url);
+    } else {
+      setPageView({ page });
+    }
   };
 
   const onCollapse = (collapse: boolean) => {
@@ -30,14 +35,14 @@ const Sidebar = () => {
       <div className={styles.logo} />
       <Menu
         className={styles.disableMenuBorder}
-        defaultSelectedKeys={[currentPage]}
+        selectedKeys={[currentPage]}
         mode="inline"
       >
         {currentPath === "/" && (
           <Menu.Item
             key="/"
             icon={<DesktopOutlined />}
-            onClick={() => redirect("/")}
+            onClick={() => redirect("/", "index")}
           >
             Dashboard
           </Menu.Item>
@@ -47,14 +52,14 @@ const Sidebar = () => {
             <Menu.Item
               key="/redux"
               icon={<DesktopOutlined />}
-              onClick={() => redirect("/redux")}
+              onClick={() => redirect("/redux", "redux.todos")}
             >
               Todos
             </Menu.Item>
             <Menu.Item
               key="/redux/counter"
               icon={<PieChartOutlined />}
-              onClick={() => redirect("/redux/counter")}
+              onClick={() => redirect("/redux/counter", "redux.counter")}
             >
               Counter
             </Menu.Item>

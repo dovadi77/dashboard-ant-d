@@ -6,6 +6,8 @@ import {
   RollbackOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
+import { pageViewState } from "../recoil/data";
 
 type TableButton = {
   isHome: boolean;
@@ -15,6 +17,7 @@ type TableButton = {
 
 const TableButton = ({ isHome, isChild, addLink }: TableButton) => {
   const router = useRouter();
+  const setPageView = useSetRecoilState(pageViewState);
   return (
     <Row style={{ margin: "0 0 1em 0" }}>
       <Col flex={3}>
@@ -25,7 +28,7 @@ const TableButton = ({ isHome, isChild, addLink }: TableButton) => {
             size="large"
             className="btn-success"
             disabled={!isHome}
-            onClick={() => router.push(addLink ?? "/add")}
+            onClick={() => setPageView({ page: "index.add" })}
           >
             Add
           </Button>
@@ -54,7 +57,7 @@ const TableButton = ({ isHome, isChild, addLink }: TableButton) => {
           size="large"
           className="btn-dark"
           disabled={!isChild}
-          onClick={() => router.back()}
+          onClick={() => setPageView({ page: "index" })}
         >
           Back
         </Button>

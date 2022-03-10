@@ -25,3 +25,8 @@ export type Todos = {
   isComplete: boolean;
   priority: number;
 };
+
+export type PageView = {
+  page: string;
+  param?: any;
+};
