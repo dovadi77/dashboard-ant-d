@@ -40,7 +40,7 @@ const Edit = () => {
       <Form
         headers={headers}
         title={"Edit - Cash - Master"}
-        value={pageView.param.id}
+        value={pageView.param.id ?? 1}
       />
     </div>
   );
